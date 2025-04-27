@@ -12,7 +12,7 @@ if [[ $1 = "--nvidia" ]] || [[ $1 = "-n" ]]
                 -e DISPLAY \
                 -e QT_X11_NO_MITSHM=1 \
                 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-                -v $XAUTHORITY:$XAUTHORITY \
+                -v $ROOT_DIR/catkin_ws:/catkin_ws \
                 -e XAUTHORITY \
                 --net=host \
                 --privileged \
@@ -25,7 +25,7 @@ else
                 -e DISPLAY \
                 -e QT_X11_NO_MITSHM=1 \
                 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-                -v $XAUTHORITY:$XAUTHORITY \
+                -v $ROOT_DIR/catkin_ws:/catkin_ws \
                 -e XAUTHORITY \
                 --net=host \
                 --privileged \

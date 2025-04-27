@@ -65,7 +65,8 @@ RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc && \
     echo "alias dros='source devel/setup.bash'" >> ~/.bashrc
 
 # Копирование проекта (универсальный путь)
-COPY . /catkin_ws/src
+# COPY . /catkin_ws/src
+#COPY ./catkin_ws /project/catkin_ws
 
 # Финализация
 RUN echo "All done!"
