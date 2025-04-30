@@ -1,0 +1,5 @@
+my_robot
+/catkin_ws/devel/.private/my_robot/cmake.lock /catkin_ws/devel/./cmake.lock
+/catkin_ws/devel/.private/my_robot/lib/pkgconfig/my_robot.pc /catkin_ws/devel/lib/pkgconfig/my_robot.pc
+/catkin_ws/devel/.private/my_robot/share/my_robot/cmake/my_robotConfig.cmake /catkin_ws/devel/share/my_robot/cmake/my_robotConfig.cmake
+/catkin_ws/devel/.private/my_robot/share/my_robot/cmake/my_robotConfig-version.cmake /catkin_ws/devel/share/my_robot/cmake/my_robotConfig-version.cmake

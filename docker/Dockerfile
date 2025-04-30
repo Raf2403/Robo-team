@@ -1,72 +1,86 @@
-# Использование базового образа ROS Noetic
 FROM osrf/ros:noetic-desktop-full
 
 # Установка переменных среды
+ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV NVIDIA_VISIBLE_DEVICES ${NVIDIA_VISIBLE_DEVICES:-all}
-ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,compute,utility
 
-# Создание и установка рабочей директории
-WORKDIR /catkin_ws
-
-# Установка системных утилит
-RUN apt-get update && \
-    apt-get install -y \
-    curl \
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
     wget \
+    curl \
+    git \
+    build-essential \
+    cmake \
     python3-pip \
-    python3-tk \
+    python3-rosdep \
+    python3-catkin-tools \
+    python3-wstool \
+    python3-vcstools \
+    python3-osrf-pycommon \
+    vim \
+    tmux \
+    tree \
     && rm -rf /var/lib/apt/lists/*
 
-# Gazebo 11
-RUN sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-RUN wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
-RUN sudo apt-get install -y libgazebo11-dev 
-# RUN sudo apt-get install -y ros-noetic-gazebo-ros
-# RUN sudo apt-get install -y gazebo11
-
-# RUN curl -sSL http://get.gazebosim.org | sh
-RUN apt-get update && \
-    apt-get install -y \
-#     gazebo11 \
-#     libgazebo11-dev 
-    ros-noetic-gazebo-ros \
+# Установка ключевых ROS-пакетов
+RUN apt-get update && apt-get install -y \
+    ros-noetic-rqt* \
+    ros-noetic-common-msgs \
+    ros-noetic-tf2-tools \
+    ros-noetic-rosbash \
+    ros-noetic-roslaunch \
+    ros-noetic-actionlib \
+    ros-noetic-dynamic-reconfigure \
+    ros-noetic-nodelet \
+    ros-noetic-pluginlib \
+    ros-noetic-urdfdom-py \
     ros-noetic-gazebo-ros-pkgs \
-    ros-noetic-gazebo-ros-control
-
-# Установка пакетов ROS
-RUN apt-get update && \
-    apt-get install -y \
+    ros-noetic-xacro \
+    ros-noetic-kdl-parser \
+    ros-noetic-tf-conversions \
     ros-noetic-control-toolbox \
     ros-noetic-realtime-tools \
     ros-noetic-ros-controllers \
-    ros-noetic-xacro \
-    python3-wstool \
-    ros-noetic-tf-conversions \
-    ros-noetic-kdl-parser \
-    liburdfdom-tools && \
-    rm -rf /var/lib/apt/lists/*
+    ros-noetic-navigation \
+    liburdfdom-tools \
+    && rm -rf /var/lib/apt/lists/*
 
-# Установка инструментов разработки
-RUN apt-get update && \
-    apt-get install -y \
-    vim \
-    git \
-    tmux \
-    tree && \
-    rm -rf /var/lib/apt/lists/*
+# Установка Python-зависимостей
+RUN pip3 install --upgrade pip && \
+    pip3 install \
+    numpy \
+    scipy \
+    matplotlib \
+    pandas \
+    pyyaml \
+    rospkg \
+    catkin_pkg \
+    empy \
+    defusedxml
 
-# Обновление pipы
-RUN pip install --upgrade pip
+#gedit and VScode
+RUN apt-get update && apt-get install -y gedit && \
+    rm -rf /var/lib/apt/lists/*
+    
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
+    install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/ && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list && \
+    apt-get update && apt-get install -y code && \
+    rm -rf /var/lib/apt/lists/*
 
 # Настройка окружения
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc && \
-    echo "alias dros='source devel/setup.bash'" >> ~/.bashrc
+    echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+    echo "alias cs='cd /catkin_ws && source devel/setup.bash'" >> ~/.bashrc
 
-# Копирование проекта (универсальный путь)
-# COPY . /catkin_ws/src
-#COPY ./catkin_ws /project/catkin_ws
+# Фиксируем версии Gazebo (опционально)
+RUN apt-get update && apt-get install -y \
+    gazebo11 \
+    libgazebo11-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Финализация
-RUN echo "All done!"
+RUN echo "ROS Noetic environment ready!"
