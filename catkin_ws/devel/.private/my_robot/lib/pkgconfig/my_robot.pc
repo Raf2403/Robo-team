@@ -3,6 +3,6 @@ prefix=/catkin_ws/devel/.private/my_robot
 Name: my_robot
 Description: Description of my_robot
 Version: 0.0.0
-Cflags: 
+Cflags: -I/catkin_ws/devel/.private/my_robot/include
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: rospy std_msgs message_runtime roscpp

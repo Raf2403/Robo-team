@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared -Wl,-soname,libgmock.so -o ../lib/libgmock.so CMakeFiles/gmock.dir/src/gmock-all.cc.o  -Wl,-rpath,/catkin_ws/build/mastering_ros_robot_description_pkg/gtest/lib ../lib/libgtest.so -lpthread 

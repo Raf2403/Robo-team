@@ -1,0 +1,1 @@
+/catkin_ws/devel/.private/my_robot/share/roseus/ros/my_robot/msg/message.l

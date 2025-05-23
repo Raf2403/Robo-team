@@ -1,0 +1,12 @@
+Visualization Manager:
+  Enabled Displays:
+    - Class: rviz/RobotModel
+      Description: URDF model
+      Name: RobotModel
+      Robot Description: robot_description
+    - Class: rviz/TF
+      Marker Scale: 0.3
+      Name: TF
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: base_link

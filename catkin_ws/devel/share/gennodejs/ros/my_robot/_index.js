@@ -1,0 +1,1 @@
+/catkin_ws/devel/.private/my_robot/share/gennodejs/ros/my_robot/_index.js

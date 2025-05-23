@@ -1,0 +1,3 @@
+Unlinking: /catkin_ws/devel/lib/pkgconfig/sensors.pc
+Unlinking: /catkin_ws/devel/share/sensors/cmake/sensorsConfig-version.cmake
+Unlinking: /catkin_ws/devel/share/sensors/cmake/sensorsConfig.cmake

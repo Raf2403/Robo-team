@@ -8,6 +8,9 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/catkin_ws/devel/.private/my_robot:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/catkin_ws/devel/.private/my_robot/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/catkin_ws/devel/.private/my_robot/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/catkin_ws/build/my_robot'
+export PYTHONPATH="/catkin_ws/devel/.private/my_robot/lib/python3/dist-packages:$PYTHONPATH"
 export ROSLISP_PACKAGE_DIRECTORIES="/catkin_ws/devel/.private/my_robot/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
 export ROS_PACKAGE_PATH="/catkin_ws/src/my_robot:$ROS_PACKAGE_PATH"
