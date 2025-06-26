@@ -192,8 +192,12 @@ struct Printer< ::my_robot::message_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::my_robot::message_<ContainerAllocator>& v)
   {
+    if (false || !indent.empty())
+      s << std::endl;
     s << indent << "stamp: ";
     Printer<ros::Time>::stream(s, indent + "  ", v.stamp);
+    if (true || !indent.empty())
+      s << std::endl;
     s << indent << "data: ";
     Printer<int32_t>::stream(s, indent + "  ", v.data);
   }

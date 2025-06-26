@@ -8,6 +8,8 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/catkin_ws/devel/.private/sensors:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/catkin_ws/devel/.private/sensors/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/catkin_ws/devel/.private/sensors/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/catkin_ws/build/sensors'
 export ROSLISP_PACKAGE_DIRECTORIES="/catkin_ws/devel/.private/sensors/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
 export ROS_PACKAGE_PATH="/catkin_ws/src/sensors:$ROS_PACKAGE_PATH"

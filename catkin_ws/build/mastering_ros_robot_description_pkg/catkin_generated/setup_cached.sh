@@ -8,6 +8,8 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/catkin_ws/devel/.private/mastering_ros_robot_description_pkg:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/catkin_ws/devel/.private/mastering_ros_robot_description_pkg/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/catkin_ws/devel/.private/mastering_ros_robot_description_pkg/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/catkin_ws/build/mastering_ros_robot_description_pkg'
 export ROSLISP_PACKAGE_DIRECTORIES="/catkin_ws/devel/.private/mastering_ros_robot_description_pkg/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
 export ROS_PACKAGE_PATH="/catkin_ws/src/mastering_ros_robot_description_pkg:$ROS_PACKAGE_PATH"
