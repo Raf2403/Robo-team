@@ -1,0 +1,34 @@
+Visualization Manager:
+  Enabled Displays:
+    - Class: rviz/RobotModel
+      Description: URDF model
+      Name: RobotModel
+      Robot Description: robot_description
+      Value: true
+      Visual Enabled: true
+      Collision Enabled: false
+    
+    - Class: rviz/TF
+      Description: Coordinate frames
+      Name: TF
+      Marker Scale: 0.3
+      Show Axes: true
+      Show Arrows: true
+      Show Names: true
+      Value: true
+
+  Global Options:
+    Background Color: 240; 240; 240
+    Fixed Frame: world  <!-- Важно: должно совпадать с корневым фреймом URDF -->
+    Frame Rate: 30.0
+
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 2.0
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0.1
+      Pitch: 0.5
+      Yaw: 0.5

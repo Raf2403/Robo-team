@@ -1,20 +1,17 @@
 <launch>
-  <!-- Аргумент для гибкости -->
+  <!-- Аргументы -->
   <arg name="model" default="$(find my_robot)/urdf/dif_robot.xacro" />
-  <arg name="rviz_config" default="$(find my_robot)/urdf.rviz" />
+  <arg name="rviz_config" default="$(find my_robot)/launch/robot.rviz"/>
+  <arg name="use_gui" default="true" />
 
-  <!-- Загрузка URDF в параметр -->
+  <!-- Загрузка URDF -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 
-  <!-- GUI для управления сочленениями -->
-  <param name="use_gui" value="true"/>
-
   <!-- Публикация состояний сочленений -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
 
   <!-- Публикация TF-фреймов -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-
-  <!-- Запуск Rviz с конфигом -->
-  <node name="rviz" pkg="rviz" type="rviz"/>
+  <!-- RViz с конфигурацией -->
+  <node name="rviz" pkg="rviz" type="rviz" />
 </launch>

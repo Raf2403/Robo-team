@@ -16,12 +16,11 @@ find_package(catkin REQUIRED COMPONENTS
   urdf
   rviz
   xacro
-  sensor_msgs  # Добавлено для обработки данных лидара
-  nav_msgs     # Добавлено для работы с картой и путём
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -53,10 +52,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(  # Закомментировано, если message.msg отсутствует
-#    FILES
-#    message.msg
-# )
+add_message_files(
+   FILES
+   message.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -73,10 +72,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(  # Закомментировано, если сообщения не используются
-#    DEPENDENCIES
-#    std_msgs
-# )
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -97,6 +96,7 @@ find_package(catkin REQUIRED COMPONENTS
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
 # )
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -109,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES my_robot
-  CATKIN_DEPENDS rospy std_msgs message_runtime roscpp sensor_msgs nav_msgs geometry_msgs urdf rviz xacro tf
+  CATKIN_DEPENDS rospy std_msgs message_runtime roscpp 
 #  DEPENDS system_lib
 )
 
@@ -163,11 +163,10 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS
-  src/a_star_planner.py
-  src/navigator.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# catkin_install_python(PROGRAMS
+#   scripts/my_python_script
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
@@ -191,9 +190,11 @@ catkin_install_python(PROGRAMS
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-install(DIRECTORY launch urdf maps
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+# install(FILES
+#   # myfile1
+#   # myfile2
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
 
 #############
 ## Testing ##

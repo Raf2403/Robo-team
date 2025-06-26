@@ -1,19 +1,24 @@
 <launch>
-  <!-- 1. Аргументы -->
-  <arg name="model" default="$(find my_robot)/urdf/mob_rob.urdf" />
-  <arg name="rviz_config" default="$(find my_robot)/launch/urdf.rviz"/>
+  <!-- Аргументы -->
+  <arg name="model" default="$(find my_robot)/urdf/test.urdf"/>
+  <arg name="rviz_config" default="$(find my_robot)/config/robot.rviz"/>
 
-  <!-- 2. Загрузка URDF -->
-  <param name="robot_description" textfile="$(arg model)" />
+  <!-- Загрузка URDF -->
+  <param name="robot_description" textfile="$(arg model)"/>
 
-  <!-- 3. GUI для управления сочленениями -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui">
-    <param name="use_gui" value="true"/>
-  </node>
+  <!-- Публикация состояний сочленений -->
+  <node name="joint_state_publisher_gui" 
+        pkg="joint_state_publisher_gui" 
+        type="joint_state_publisher_gui"/>
+        
+  <!-- Публикация TF-фреймов -->
+  <node name="robot_state_publisher" 
+        pkg="robot_state_publisher" 
+        type="robot_state_publisher"
+        output="screen"/> <!-- Добавлен вывод логов -->
 
-  <!-- 4. Публикация TF-фреймов (ОШИБКА В ОРИГИНАЛЕ!) -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-
-  <!-- 5. RViz с конфигурацией -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" required="true"/>
+  <!-- Запуск RViz -->
+  <node name="rviz" 
+        pkg="rviz" 
+        type="rviz" />
 </launch>

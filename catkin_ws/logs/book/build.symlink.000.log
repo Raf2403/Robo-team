@@ -1,0 +1,3 @@
+Symlinking /catkin_ws/devel/lib/pkgconfig/book.pc
+Symlinking /catkin_ws/devel/share/book/cmake/bookConfig-version.cmake
+Symlinking /catkin_ws/devel/share/book/cmake/bookConfig.cmake

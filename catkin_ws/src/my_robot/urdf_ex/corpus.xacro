@@ -1,0 +1,52 @@
+1<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+
+<!-- Включение общего макроса -->
+<xacro:include filename="$(find my_robot)/urdf_ex/common_macro.xacro" />
+
+<!-- *********************************************************************** -->
+
+<!-- Макрос для создания корпуса робота -->
+<xacro:macro 
+    name="corpus" 
+    params="
+        link_name  
+        length
+        width
+        height
+        mass">
+    <link name="${link_name}">
+        <!-- Визуальное представление корпуса -->
+        <visual>
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 0"/>
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            <!-- Материал для визуализации в синем цвете -->
+            <material name="Blue">
+                <color rgba="0.0 0.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <!-- Коллизионное представление корпуса -->
+        <collision>
+             <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 0"/>
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+        </collision>
+        <!-- Расчет инерционной матрицы для корпуса -->
+        <xacro:inertial_matrix mass="${mass}"/>
+    </link>
+
+    <!-- Указание материала для визуализации в среде Gazebo -->
+    <gazebo reference ="${link_name}">
+        <material>Gazebo/Blue</material>
+     </gazebo>
+</xacro:macro>
+</robot>
