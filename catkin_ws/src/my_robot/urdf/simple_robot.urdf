@@ -47,4 +47,33 @@
     <limit lower="-0.1" upper="0.1" effort="10" velocity="0.5"/>
   </joint>
 
+  <!-- Добавление лидара -->
+  <gazebo reference="base_link">
+    <sensor type="ray" name="lidar">
+      <pose>0 0 0.15 0 0 0</pose> <!-- Смещение лидара над базой (0.15 м вверх) -->
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples> <!-- Количество лучей -->
+            <resolution>1</resolution> <!-- Угол между лучами (1 градус) -->
+            <min_angle>-1.57</min_angle> <!-- -90 градусов -->
+            <max_angle>1.57</max_angle> <!-- +90 градусов -->
+          </horizontal>
+          <range>
+            <min>0.1</min> <!-- Минимальная дистанция, м -->
+            <max>10.0</max> <!-- Максимальная дистанция, м -->
+          </range>
+        </scan>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev> <!-- Уровень шума -->
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+        <topicName>/scan</topicName> <!-- Топик для данных лидара -->
+        <frameName>base_link</frameName> <!-- Рамка лидара -->
+      </plugin>
+    </sensor>
+  </gazebo>
 </robot>
