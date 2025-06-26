@@ -1,0 +1,32 @@
+# Joint state controller that publishes the state of all joints in the robot
+joint_state_controller:
+  type: "joint_state_controller/JointStateController"  # Controller type responsible for collecting and publishing joint state data
+  publish_rate: 50  # Frequency of publishing joint state data in Hertz
+
+# Position controller for controlling the camera
+camera_controller:
+  type: "position_controllers/JointPositionController"  # Controller type responsible for controlling joint position
+  joint: camera_joint  # Joint controlled by this controller
+
+# Velocity controllers for controlling the wheels
+# Each controller controls one wheel
+
+# Controller for the front left wheel
+front_left_wheel_controller:
+  type: "velocity_controllers/JointVelocityController"  # Controller controls the joint rotation velocity
+  joint: front_left_wheel_joint  # Joint of the front left wheel
+
+# Controller for the front right wheel
+front_right_wheel_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: front_right_wheel_joint  # Joint of the front right wheel
+
+# Controller for the back left wheel
+back_left_wheel_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: back_left_wheel_joint  # Joint of the back left wheel
+
+# Controller for the back right wheel
+back_right_wheel_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: back_right_wheel_joint  # Joint of the back right wheel

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+
+<!-- Including a common macro -->
+<xacro:include filename="$(find mobile_robot_base_ros1)/urdf/common_macro.xacro" />
+
+<!-- *********************************************************************** -->
+
+<!-- Macro for creating a control block -->
+<xacro:macro 
+    name="control_block" 
+    params="
+        link_name  
+        length
+        width
+        height
+        mass">
+    <!-- Creating a link for the control block object -->
+    <link name="${link_name}">
+        <!-- Visual representation of the control block -->
+        <visual>
+            <!-- Defining the position and orientation of the control block -->
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 ${height/2}"/>
+            <!-- Geometry of the control block -->
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            <!-- Material for visualizing the control block (red) -->
+            <material name="Red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <!-- Collision representation of the control block -->
+        <collision>
+            <!-- Defining the position and orientation of the control block -->
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 ${height/2}"/>
+            <!-- Geometry of the control block -->
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+        </collision>
+        <!-- Calculation of the inertial matrix for the control block -->
+        <xacro:inertial_matrix mass="${mass}"/>
+    </link>
+    <!-- Specifying material for visualization in the Gazebo environment -->
+    <gazebo reference ="${link_name}">
+        <!-- Using material "Red" for visualization in Gazebo -->
+        <material>Gazebo/Red</material>
+     </gazebo>
+</xacro:macro>
+</robot>

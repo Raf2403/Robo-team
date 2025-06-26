@@ -1,0 +1,17 @@
+{
+    // "cmake.sourceDirectory": "D:/Projects/ROS-Multiagent-Robotics-System/basic_mobile_robot"
+    "python.analysis.extraPaths": [
+        "**src/"
+    ],
+    "python.analysis.include": [
+        "**src/"
+    ],
+    "python.autoComplete.extraPaths": [
+        "**src/"
+    ],
+    "files.associations": {
+        "*.html": "html",
+        "*.txt": "cmake",
+        "cstdio": "cpp"
+    }
+}
