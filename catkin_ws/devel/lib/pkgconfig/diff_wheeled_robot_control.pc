@@ -1,0 +1,1 @@
+/catkin_ws/devel/.private/diff_wheeled_robot_control/lib/pkgconfig/diff_wheeled_robot_control.pc

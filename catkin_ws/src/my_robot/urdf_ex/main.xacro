@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+
+<!-- Включение xacro-->
+<xacro:include filename="$(find my_robot)/urdf_ex/common_macro.xacro" />
+<xacro:include filename="$(find my_robot)/urdf_ex/corpus.xacro" />
+<xacro:include filename="$(find my_robot)/urdf_ex/wheel.xacro" />
+<xacro:include filename="$(find my_robot)/urdf_ex/camera.xacro" />
+<xacro:include filename="$(find my_robot)/urdf_ex/control_block.xacro" />
+
+<!-- *********************************************************************** -->
+
+<!-- Включение материалов -->
+<material name="Black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+</material>
+
+<material name="White">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+</material>
+
+<material name="Blue">
+    <color rgba="0.0 0.0 1.0 1.0"/>
+
+</material>
+
+<material name="Red">
+    <color rgba="1.0 0.0 0.0 1.0"/>
+</material>
+
+<!-- *********************************************************************** -->
+
+<!-- Константы -->
+<xacro:property name="PI" value="3.14"/>
+
+<!-- Свойства шасси -->
+<xacro:property name="corpus_len" value="1.2"/>
+<xacro:property name="corpus_width" value="0.6"/>
+<xacro:property name="corpus_height" value="0.2"/>
+<xacro:property name="corpus_mass" value="10"/>
+
+<!-- Свойства колес -->
+<xacro:property name="wheel_radius" value="0.2"/>
+<xacro:property name="wheel_width" value="0.05"/>
+<xacro:property name="wheel_mass" value="1.0"/>
+
+<xacro:property name="hinge_wheel_limit" value="${PI/3}"/>
+
+<!-- *********************************************************************** -->
+
+<xacro:corpus 
+    link_name="base_link" 
+    length="${corpus_len}" 
+    width="${corpus_width}" 
+    height="${corpus_height}" 
+    mass="${corpus_mass}" />
+
+<!-- Добавляем 4 колеса -->
+<!-- *********************************************************************** -->
+
+<xacro:wheel 
+    link_name="front_left_wheel_link"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<xacro:wheel 
+    link_name="front_right_wheel_link"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<xacro:wheel 
+    link_name="back_left_wheel_link"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<xacro:wheel 
+    link_name="back_right_wheel_link"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+    
+<!-- Переднее левое колесо -->
+<!-- *********************************************************************** -->
+
+<joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel_link"/>
+    <axis xyz="0 0 1"/>
+    <origin
+        xyz="${(corpus_len/2)-(wheel_radius)} ${(corpus_width/2)+(wheel_width/2)} 0" 
+        rpy="${PI/2} 0 0" /> 
+    <limit effort= "30" velocity="1.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+</joint>
+
+<xacro:Transmission_rotation_block joint_name="front_left_wheel_joint"/>
+
+<!-- Переднее правое колесо -->
+<!-- *********************************************************************** -->
+
+<joint name="front_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_right_wheel_link"/>
+    <axis xyz="0 0 1"/>
+    <origin
+        xyz="${(corpus_len/2)-(wheel_radius)} ${(-corpus_width/2)-(wheel_width/2)} 0" 
+        rpy="${PI/2} 0 0" /> 
+    <limit effort= "30" velocity="1.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+</joint>
+
+<xacro:Transmission_rotation_block joint_name="front_right_wheel_joint"/>
+
+<!-- Заднее левое колесо -->
+<!-- *********************************************************************** -->
+
+<joint name="back_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="back_left_wheel_link"/>
+    <axis xyz="0 0 1"/>
+    <origin
+        xyz="${(-corpus_len/2)+(wheel_radius)} ${(+corpus_width/2)+(wheel_width/2)} 0" 
+        rpy="${PI/2} 0 0" /> 
+    <limit effort= "30" velocity="1.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+</joint>
+
+<xacro:Transmission_rotation_block joint_name="back_left_wheel_joint"/>
+
+<!-- Заднее правое колесо -->
+<!-- *********************************************************************** -->
+
+<joint name="back_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="back_right_wheel_link"/>
+    <axis xyz="0 0 1"/>
+    <origin
+        xyz="${(-corpus_len/2)+(wheel_radius)} ${(-corpus_width/2)-(wheel_width/2)} 0" 
+        rpy="${PI/2} 0 0" /> 
+    <limit effort= "30" velocity="1.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+</joint>
+
+<xacro:Transmission_rotation_block joint_name="back_right_wheel_joint"/>
+
+<!-- Блок управления -->
+<!-- *********************************************************************** -->
+
+<xacro:control_block 
+    link_name="control_block_link"  
+    length="0.45"
+    width="0.45"
+    height="0.1"
+    mass="3"/>
+
+<joint name="control_block_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="control_block_link"/>
+    <origin xyz="${-corpus_len/2+0.25} 0.0 ${corpus_height/2}" rpy="0 0 0"/>
+</joint>
+
+<!-- Камера -->
+<!-- *********************************************************************** -->
+
+<xacro:camera 
+    link_name="camera_link"  
+    length="0.1"
+    width="0.2"
+    height="0.1"
+    mass="1"/>
+
+<joint name="camera_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${corpus_len/2-0.05} 0.0 ${cor
+
+pus_height/2}" rpy="0 0 0"/>
+    <limit effort="30" velocity="1.0"/>
+</joint>
+
+<xacro:Fixed_rotation_block joint_name="camera_joint"/>
+
+<!-- *********************************************************************** -->
+<!-- Добавляем плагин ROS, чтобы мы могли взаимодействовать с нашим роботом -->
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/</robotNamespace>
+    </plugin>
+</gazebo>
+
+</robot>

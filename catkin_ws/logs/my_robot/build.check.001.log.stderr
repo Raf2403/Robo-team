@@ -1,0 +1,5 @@
+[31m[1mCMake Error[0m at /catkin_ws/src/my_robot/CMakeLists.txt:49 (add_message_files):
+  Unknown CMake command "add_message_files".
+
+
+make: *** [Makefile:390: cmake_check_build_system] Error 1

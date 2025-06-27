@@ -1,0 +1,61 @@
+На случай, если нужно добавить ssh ключ
+Проверить существующие ключи:
+ls -al ~/.ssh
+Сгенерировать новый SSH-ключ (если нет существующего):
+ssh-keygen -t ed25519 -C "your_email@example.com"
+Добавить ключ в ssh-agent:
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+Скопировать ключ в буфер обмена (Linux)
+xclip -sel clip < ~/.ssh/id_ed25519.pub
+Добавить в Github
+
+Push коммитов в гитхаб
+инициализация репозитория
+git init
+выбираем направление репозитория
+git remote add origin git@gitlab.com:username/projectname.git
+копирование репозитория если нужно
+git clone git@gitlab.com:username/projectname.git
+
+Работа с изменениями
+# Проверить статус
+git status
+
+# Добавить все изменения
+git add .
+
+# Добавить конкретный файл
+git add filename
+
+# Закоммитить изменения
+git commit -m "Commit message"
+
+# Отправить изменения в удаленный репозиторий
+git push -u origin main или master
+
+# Получить изменения из удаленного репозитория
+git pull origin main
+
+Создание новой ветки
+# Создать новую ветку
+git checkout -b new-branch
+
+# Переключиться на ветку
+git checkout branch-name
+
+# Список веток
+git branch
+
+# Отправить ветку на сервер
+git push -u origin branch-name
+
+Прочее
+# Просмотр истории коммитов
+git log
+
+# Отмена изменений в файле
+git checkout -- filename
+
+# Удаление файла из индекса Git
+git rm --cached filename

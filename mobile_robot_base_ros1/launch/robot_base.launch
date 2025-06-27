@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+
+<!-- *********************************************************************** -->
+<!-- Arguments for URDF model, RViz configuration file -->
+<arg name="model" default="$(find mobile_robot_base_ros1)/urdf/main.xacro"/>
+<arg name="rvizconfig" default="$(find mobile_robot_base_ros1)/rviz/base.rviz"/>
+
+<!-- *********************************************************************** -->
+<!-- Launch Gazebo environment -->
+<include file="$(find mobile_robot_base_ros1)/launch/gazebo.launch">
+    <arg name="model" value="$(arg model)"/>
+</include>
+
+<!-- *********************************************************************** -->
+<!-- Launch RViz -->
+<include file="$(find mobile_robot_base_ros1)/launch/rviz.launch">
+    <arg name="model" value="$(arg model)"/>
+    <arg name="rvizconfig" value="$(arg rvizconfig)"/>
+</include>
+
+<!-- *********************************************************************** -->
+<!-- Run controller node -->
+<node 
+    pkg="mobile_robot_base_ros1" 
+    type="simple_motor_controller" 
+    name="simple_motor_controller"
+    output="screen"/>
+
+<!-- *********************************************************************** -->
+<!-- Run GUI node -->
+<node 
+    pkg="mobile_robot_base_ros1" 
+    type="control_gui.py" 
+    name="control_gui"
+    output="screen"/>
+
+<!-- *********************************************************************** -->
+<!-- Run camera node -->
+<node 
+    pkg="mobile_robot_base_ros1" 
+    type="camera_view.py" 
+    name="camera_view"
+    output="screen"/>
+
+</launch>

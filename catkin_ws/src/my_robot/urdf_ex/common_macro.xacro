@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+<!-- Макрос для инерционной модели цилиндра -->
+<xacro:macro name="cylinder_inertia" params ="m r h">
+  <inertial>
+   <mass value="${m}"/> <!-- Масса цилиндра -->
+   <!-- Формулы для вычисления моментов инерции для цилиндра -->
+   <inertia ixx="${m*(3*r*r+h*h)/12}"  ixy="0.0" ixz="0.0"
+            iyy="${m*(3*r*r+h*h)/12}"  iyz="0.0" izz="${m*r*r/2}"/>
+   </inertial>
+</xacro:macro>
+
+<!-- *********************************************************************** -->
+<!-- Макрос для инерционной модели базы -->
+<xacro:macro name= "inertial_matrix" params="mass">
+  <inertial>
+    <mass value="${mass}"/> <!-- Масса базы -->
+    <!-- Установка единичной матрицы для моментов инерции -->
+    <inertia 
+        ixx="1.0" ixy="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0" ixz="0.0"/>
+   </inertial>
+ </xacro:macro>
+
+<!-- *********************************************************************** -->
+
+<!-- Макрос для инерционной модели сферы -->
+<xacro:macro name="inertial_sphere" params="mass radius *origin">
+    <inertial>
+        <xacro:insert_block name="origin"/>
+        <mass value="${mass}" /> <!-- Масса сферы -->
+        <!-- Формулы для вычисления моментов инерции для сферы -->
+        <inertia ixx="${(2/5) * mass * (radius*radius)}" ixy="0.0" ixz="0.0"
+                iyy="${(2/5) * mass * (radius*radius)}" iyz="0.0"
+                izz="${(2/5) * mass * (radius*radius)}" />
+    </inertial>
+</xacro:macro>  
+
+
+<xacro:macro name="inertial_box" params="mass x y z *origin">
+    <inertial>
+        <xacro:insert_block name="origin"/>
+        <mass value="${mass}" /> <!-- Масса параллелепипеда -->
+        <!-- Формулы для вычисления моментов инерции для параллелепипеда -->
+        <inertia ixx="${(1/12) * mass * (y*y+z*z)}" ixy="0.0" ixz="0.0"
+                iyy="${(1/12) * mass * (x*x+z*z)}" iyz="0.0"
+                izz="${(1/12) * mass * (x*x+y*y)}" />
+    </inertial>
+</xacro:macro>
+
+
+<xacro:macro name="inertial_cylinder" params="mass length radius *origin">
+    <inertial>
+        <xacro:insert_block name="origin"/>
+        <mass value="${mass}" /> <!-- Масса цилиндра -->
+        <!-- Формулы для вычисления моментов инерции для цилиндра -->
+        <inertia ixx="${(1/12) * mass * (3*radius*radius + length*length)}" ixy="0.0" ixz="0.0"
+                iyy="${(1/12) * mass * (3*radius*radius + length*length)}" iyz="0.0"
+                izz="${(1/2) * mass * (radius*radius)}" />
+    </inertial>
+</xacro:macro>
+
+
+<!-- *********************************************************************** -->
+<!-- Блок трансмиссии для вращения цилиндра -->
+<xacro:macro name="Transmission_rotation_block" params="joint_name">
+    <transmission name="${joint_name}_rotation_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="${joint_name}_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="${joint_name}">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+</xacro:macro>
+
+<!-- *********************************************************************** -->
+<!-- Фиксированный блок трансмиссии для вращения цилиндра -->
+<xacro:macro name="Fixed_rotation_block" params="joint_name">
+    <transmission name="${joint_name}_fixed_rotation">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="$${joint_name}_motor">
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="${joint_name}">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+      </transmission>
+</xacro:macro>
+</robot>

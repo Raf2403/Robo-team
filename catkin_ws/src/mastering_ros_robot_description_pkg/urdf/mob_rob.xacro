@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="differential_drive_robot">
+
+  <!-- Основные ссылки и суставы -->
+
+  <link name="world"/>
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="body_link"/>
+  </joint>
+
+  <link name="body_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.15"/>
+      <geometry>
+        <box size="1.0 0.6 0.3"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.15"/>
+      <geometry>
+        <box size="1.0 0.6 0.3"/>
+      </geometry>
+    </collision>
+  <inertial>
+    <origin xyz="0 0 0.15"/>
+    <mass value="10"/>
+    <inertia ixx="0.375" ixy="0" ixz="0" iyy="0.907" iyz="0" izz="1.133"/> 
+  </inertial>
+  </link>
+
+  <!-- Подключаем файл с макросом колеса -->
+  <xacro:include filename="wheel.xacro"/>
+
+  <!-- Создаем 4 колеса с разными позициями -->
+  <xacro:wheel_module wheel_name="wheel1" parent_link="body_link" xyz="-0.3 -0.35 0" rpy="0 0 0"/>
+  <xacro:wheel_module wheel_name="wheel2" parent_link="body_link" xyz="-0.3 0.35 0" rpy="0 0 0"/>
+  <xacro:wheel_module wheel_name="wheel3" parent_link="body_link" xyz="0.3 -0.35 0" rpy="0 0 0"/>
+  <xacro:wheel_module wheel_name="wheel4" parent_link="body_link" xyz="0.3 0.35 0" rpy="0 0 0"/>
+
+</robot>
+
+
+

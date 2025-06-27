@@ -1,0 +1,1 @@
+/catkin_ws/devel/.private/my_robot/lib/python3/dist-packages/my_robot/msg/__init__.py

@@ -1,0 +1,13 @@
+<launch>
+  <!-- Генерация robot_description из xacro -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find my_robot)/urdf/dif_robot.xacro"/>
+
+  <!-- Запуск joint_state_publisher_gui для управления суставами -->
+  <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" output="screen"/>
+
+  <!-- Запуск robot_state_publisher для публикации TF -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
+
+  <!-- Запуск RViz с преднастроенной конфигурацией (если есть) -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find my_robot)/launch/robot.rviz" />
+</launch>

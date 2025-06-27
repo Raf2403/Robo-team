@@ -1,0 +1,5 @@
+book
+/catkin_ws/devel/.private/book/cmake.lock /catkin_ws/devel/./cmake.lock
+/catkin_ws/devel/.private/book/lib/pkgconfig/book.pc /catkin_ws/devel/lib/pkgconfig/book.pc
+/catkin_ws/devel/.private/book/share/book/cmake/bookConfig-version.cmake /catkin_ws/devel/share/book/cmake/bookConfig-version.cmake
+/catkin_ws/devel/.private/book/share/book/cmake/bookConfig.cmake /catkin_ws/devel/share/book/cmake/bookConfig.cmake

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+
+<!-- Включение общего макроса -->
+<xacro:include filename="$(find my_robot)/urdf_ex/common_macro.xacro" />
+
+<!-- *********************************************************************** -->
+
+<!-- Макрос для создания блока управления -->
+<xacro:macro 
+    name="control_block" 
+    params="
+        link_name  
+        length
+        width
+        height
+        mass">
+    <!-- Создание ссылки на объект блока управления -->
+    <link name="${link_name}">
+        <!-- Визуальное представление блока управления -->
+        <visual>
+            <!-- Определение положения и ориентации блока управления -->
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 ${height/2}"/>
+            <!-- Геометрия блока управления -->
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            <!-- Материал для визуализации блока управления (красный) -->
+            <material name="Red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <!-- Коллизионное представление блока управления -->
+        <collision>
+            <!-- Определение положения и ориентации блока управления -->
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 ${height/2}"/>
+            <!-- Геометрия блока управления -->
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+        </collision>
+        <!-- Расчет инерционной матрицы для блока управления -->
+        <xacro:inertial_matrix mass="${mass}"/>
+    </link>
+    <!-- Указание материала для визуализации в среде Gazebo -->
+    <gazebo reference ="${link_name}">
+        <!-- Используем материал "Red" для визуализации в Gazebo -->
+        <material>Gazebo/Red</material>
+     </gazebo>
+</xacro:macro>
+</robot>

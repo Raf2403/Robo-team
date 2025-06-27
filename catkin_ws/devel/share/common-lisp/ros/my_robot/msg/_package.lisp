@@ -1,0 +1,1 @@
+/catkin_ws/devel/.private/my_robot/share/common-lisp/ros/my_robot/msg/_package.lisp

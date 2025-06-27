@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+
+<!-- *********************************************************************** -->
+<!-- These are the arguments you can pass to this launch file, for example, paused:=true -->
+<arg name="paused" default="true"/>
+<arg name="use_sim_time" default="true"/>
+<arg name="gui" default="true"/>
+<arg name="headless" default="false"/>
+<arg name="debug" default="false"/>
+
+<arg name="model" default="$(find mobile_robot_base_ros1)/urdf/main.xacro"/>	
+<arg name="world" default="$(find mobile_robot_base_ros1)/world/empty_world.world" />
+<arg name="joint_state" default="$(find mobile_robot_base_ros1)/config/robot_joint_state.yaml"/>
+<arg name="pid_controllers" default="$(find mobile_robot_base_ros1)/config/pid_params.yaml"/>
+
+<!-- *********************************************************************** -->
+<!-- Load joint controller configuration from YAML file to parameter server -->
+<rosparam file="$(arg joint_state)" command="load"/>
+<!-- <rosparam file="$(arg pid_controllers)" command="load"/> -->
+
+<!-- *********************************************************************** -->
+<!-- We continue the logic in the empty_world.launch file -->
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="world_name" value="$(arg world)" />
+	<arg name="debug" value="$(arg debug)" />
+	<arg name="gui" value="$(arg gui)" />
+	<arg name="paused" value="$(arg paused)" />
+	<arg name="headless" value="$(arg headless)" />
+	<arg name="use_sim_time" value="$(arg use_sim_time)" />
+</include>
+
+<!-- *********************************************************************** -->
+<!-- Load the URDF into the ROS Parameter Server -->
+<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+
+<!-- *********************************************************************** -->
+<!-- Run a Python script to send a service call to gazebo_ros to spawn a URDF robot model -->
+<node name="urdf_spawner" 
+	pkg="gazebo_ros" 
+	type="spawn_model" 
+	respawn="false" 
+	output="screen"
+	args="-x 0.0
+		-y 0.0
+		-z 0.5   
+		-unpause 
+		-urdf 
+		-model mobile_robot_base 
+		-param robot_description"/>
+
+<!-- *********************************************************************** -->
+<!-- Load the controllers -->
+<!-- The args point to the configuration from the loaded file (load.yml), 
+and define their names, allowing to build a hierarchical structure -->
+<node name="robot_base_controllers_spawner" 
+    pkg="controller_manager" 
+    type="spawner"
+    respawn="false" 
+    output="screen" 
+    args="
+        joint_state_controller
+        camera_controller
+
+        front_left_wheel_controller
+        front_right_wheel_controller
+
+        back_left_wheel_controller
+        back_right_wheel_controller"/>
+
+<!-- *********************************************************************** -->
+		
+</launch>

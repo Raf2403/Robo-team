@@ -1,0 +1,15 @@
+<launch>
+  <!-- Генерация robot_description из xacro -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find my_robot)/urdf/mob_rob.xacro"/>
+
+  <!-- Спавн модели в Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-param robot_description -urdf -model my_robot"/>
+
+  <!-- Запуск Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+  <!-- Запуск robot_state_publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
+</launch>
+

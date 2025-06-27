@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+
+<!-- Включение общего макроса -->
+<xacro:include filename="$(find my_robot)/urdf_ex/common_macro.xacro" />
+
+<!-- *********************************************************************** -->
+
+<!-- Макрос для создания камеры -->
+<xacro:macro 
+    name="camera" 
+    params="
+        link_name  
+        length
+        width
+        height
+        mass">
+    <!-- Создание ссылки на объект камеры -->
+    <link name="${link_name}">
+        <!-- Визуальное представление камеры -->
+        <visual>
+            <!-- Определение положения и ориентации камеры -->
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 ${height/2}"/>
+            <!-- Геометрия камеры -->
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            <!-- Материал для визуализации камеры (желтый) -->
+            <material name="yellow">
+                <color rgba="1 1 0 1"/>
+            </material>
+        </visual>
+        <!-- Коллизионное представление камеры -->
+        <collision>
+            <!-- Определение положения и ориентации камеры -->
+            <origin 
+                rpy= "0 0 0"
+                xyz= "0 0 ${height/2}"/>
+            <!-- Геометрия камеры -->
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+        </collision>
+        <!-- Расчет инерционной матрицы для камеры -->
+        <xacro:inertial_matrix mass="${mass}"/>
+    </link>
+    <!-- Указание материала для визуализации в среде Gazebo -->
+    <gazebo reference ="${link_name}">
+        <!-- Используем материал "Yellow" для визуализации в Gazebo -->
+        <material>Gazebo/Yellow</material>
+        <!-- Добавляем сенсор камеры -->
+        <sensor type="camera" name="camera_1">
+            <!-- Частота обновления изображения -->
+            <update_rate>30.0</update_rate>
+            <!-- Параметры камеры -->
+            <camera name="camera">
+                <!-- Горизонтальное поле зрения -->
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <!-- Размер изображения -->
+                <image>
+                    <width>400</width>
+                    <height>400</height>
+                    <format>R8G8B8</format>
+                </image>
+                <!-- Границы обрезки изображения -->
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+                <!-- Шумы изображения -->
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <!-- Плагин для управления камерой в Gazebo -->
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <!-- Всегда включен -->
+                <alwaysOn>true</alwaysOn>
+                <!-- Частота обновления (0.0 - максимальная) -->
+                <updateRate>0.0</updateRate>
+                <!-- Наименование камеры -->
+                <cameraName>camera</cameraName>
+                <!-- Наименование темы для изображения -->
+                <imageTopicName>image_raw</imageTopicName>
+                <!-- Наименование темы для информации о камере -->
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <!-- Наименование рамки камеры -->
+                <frameName>camera_link</frameName>
+                <!-- Настройки искажения (не используются) -->
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>0.0</distortionK1>
+                <distortionK2>0.0</distortionK2>
+                <distortionK3>0.0</distortionK3>
+                <distortionT1>0.0</distortionT1>
+                <distortionT2>0.0</distortionT2>
+            </plugin>
+        </sensor>
+    </gazebo>
+</xacro:macro>
+</robot>

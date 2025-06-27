@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package format="2">
+  <!-- Main package information -->
+  <name>mobile_robot_base_ros1</name>
+  <version>0.0.1</version>
+  <description>Base project for mobile platform</description>
+  <maintainer email="anton42@yandex.ru">Anton Pisarenko</maintainer>
+  <license>MIT</license>
+
+  <!-- Buildtool dependency -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Runtime dependencies -->
+  <exec_depend>roscpp</exec_depend>               <!-- C++ client library for ROS -->
+  <exec_depend>rospy</exec_depend>                 <!-- Python client library for ROS -->
+  <exec_depend>rviz</exec_depend>                  <!-- 3D visualization in ROS -->
+  <exec_depend>std_msgs</exec_depend>              <!-- Standard ROS messages -->
+  <exec_depend>tf</exec_depend>                    <!-- Coordinate transformation library -->
+  <exec_depend>urdf</exec_depend>                  <!-- URDF file parser -->
+  <exec_depend>xacro</exec_depend>                 <!-- Macro language for URDF -->
+
+  <!-- Controllers and tools for Gazebo and ROS -->
+  <exec_depend>controller_manager</exec_depend>    <!-- Controller management in ROS -->
+  <exec_depend>diff_drive_controller</exec_depend> <!-- Controller for differential drive -->
+  <exec_depend>gazebo_ros</exec_depend>            <!-- ROS integration with Gazebo simulator -->
+  <exec_depend>gazebo_ros_control</exec_depend>    <!-- Plugins for controlling robots in Gazebo -->
+  <exec_depend>joint_state_controller</exec_depend>  <!-- Joint state controller -->
+  <exec_depend>position_controllers</exec_depend>  <!-- Position controllers -->
+  <exec_depend>velocity_controllers</exec_depend>  <!-- Velocity controllers -->
+  <exec_depend>robot_state_publisher</exec_depend> <!-- Robot state publisher -->
+  <exec_depend>rqt_robot_steering</exec_depend>    <!-- Robot steering interface -->
+
+  <!-- Common dependencies for build and runtime -->
+  <depend>geometry_msgs</depend>                   <!-- Messages for geometric data -->
+  <depend>libopencv-dev</depend>                   <!-- Development with OpenCV -->
+  <depend>cv_bridge</depend>                       <!-- Bridge between ROS and OpenCV -->
+  <depend>image_transport</depend>                 <!-- Image transport in ROS -->
+  <depend>video_stream_opencv</depend>             <!-- Video streams using OpenCV -->
+  <depend>python3-opencv</depend>                  <!-- OpenCV module for Python 3 -->
+
+  <!-- The export tag is used to define additional package parameters -->
+  <export>
+    <!-- Paths to models and media files for Gazebo -->
+    <gazebo_ros gazebo_model_path="${prefix}/models" />
+    <gazebo_ros gazebo_media_path="${prefix}/models" />
+    <gazebo_ros gazebo_model_path="${prefix}/world" />
+    <gazebo_ros gazebo_media_path="${prefix}/world" />
+  </export>
+
+</package>
