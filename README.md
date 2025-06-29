@@ -54,7 +54,7 @@ roslaunch mastering_ros_robot_description_pkg gazebo.launch
 sudo bash exec_docker
 cd ~/catkin_ws
 source devel/setup.bash
-rosrun my_robot a_star_planner.py
+rosrun mastering_ros_robot_description_pkg a_star_planner.py
 ```
 Примечания:
 
